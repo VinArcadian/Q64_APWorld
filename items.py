@@ -37,8 +37,6 @@ ITEM_NAME_TO_ID = {
     "Fire Ruby": 24,
     "Eletale Book": 25,
     "Dark Gaol Key": 26,
-    "Sidhe's Gift": 27,
-    "Sidhe's Boon": 28,
 }
 
 # Items should have a defined default classification.
@@ -70,8 +68,6 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Fire Ruby": ItemClassification.progression,
     "Eletale Book": ItemClassification.progression,
     "Dark Gaol Key": ItemClassification.progression,
-    "Sidhe's Gift": ItemClassification.filler,
-    "Sidhe's Boon": ItemClassification.useful,
 }
 
 
@@ -124,27 +120,27 @@ def create_all_items(world: Quest64World) -> None:
     # First, we create a list containing all the items that always exist.
 
     itempool: list[Item] = [
-        world.create_item("White Wings"),
-        world.create_item("Yellow Wings"),
-        world.create_item("Blue Wings"),
-        world.create_item("Green Wings"),
-        world.create_item("Red Wings"),
-        world.create_item("Black Wings"),
         world.create_item("Earth Orb"),
         world.create_item("Wind Jade"),
         world.create_item("Water Jewel"),
         world.create_item("Fire Ruby"),
+        world.create_item("Eletale Book"),
         world.create_item("Dark Gaol Key"),
     ]
 
     ## Some items may only exist if the player enables certain options.
     ## In our case, If the hammer option is enabled, the sixth item is the Hammer.
     ## Otherwise, we add a filler Confetti Cannon.
-    # if world.options.hammer:
+    if world.options.wings:
         ## Once again, it is important to stress that even though the Hammer doesn't always exist,
         ## it must be present in the worlds item_name_to_id.
         ## Whether it is actually in the itempool is determined purely by whether we create and add the item here.
-        # itempool.append(world.create_item("Hammer"))
+        itempool.append(world.create_item("White Wings"))
+        itempool.append(world.create_item("Yellow Wings"))
+        itempool.append(world.create_item("Blue Wings"))
+        itempool.append(world.create_item("Green Wings"))
+        itempool.append(world.create_item("Red Wings"))
+        itempool.append(world.create_item("Black Wings"))
 
     # Archipelago requires that each world submits as many locations as it submits items.
     # This is where we can use our filler and trap items.
