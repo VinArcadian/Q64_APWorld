@@ -81,6 +81,7 @@ def create_regular_locations(world: Quest64World) -> None:
     wind_region = world.get_region("Wind Region")
     water_region = world.get_region("Water Region")
     fire_region = world.get_region("Fire Region")
+    book_region = world.get_region("Book Region")
 
     # One way to create locations is by just creating them directly via their constructor.
     monastery_garden = Quest64Location(
@@ -99,14 +100,17 @@ def create_regular_locations(world: Quest64World) -> None:
     )
     earth_region.add_locations(earth_region_locations, Quest64Location)
 
-    wind_region_locations = get_location_names_with_ids(["Top Left Room Chest"])
+    wind_region_locations = get_location_names_with_ids(["EXAMPLE_WIND_LOCATION"])
     wind_region.add_locations(wind_region_locations, Quest64Location)
 
-    water_region_locations = get_location_names_with_ids(["Right Room Enemy Drop"])
+    water_region_locations = get_location_names_with_ids(["EXAMPLE_WATER_LOCATION"])
     water_region.add_locations(water_region_locations, Quest64Location)
 
     fire_region_locations = get_location_names_with_ids(["EXAMPLE_FIRE_LOCATION"])
     fire_region.add_locations(fire_region_locations, Quest64Location)
+
+    book_region_locations = get_location_names_with_ids(["EXAMPLE_BOOK_LOCATION"])
+    book_region.add_locations(book_region_locations, Quest64Location)
 
     ## Locations may be in different regions depending on the player's options.
     ## In our case, the hammer option puts the Top Middle Chest into its own room called Top Middle Room.
@@ -139,7 +143,7 @@ def create_events(world: Quest64World) -> None:
     final_boss_room = world.get_region("Final Boss Room")
 
     # One way to create an event is simply to use one of the normal methods of creating a location.
-    button_in_top_left_room = APQuestLocation(world.player, "Top Left Room Button", None, top_left_room)
+    button_in_top_left_room = Quest64Location(world.player, "Top Left Room Button", None, top_left_room)
     top_left_room.locations.append(button_in_top_left_room)
 
     # We then need to put an event item onto the location.
@@ -158,7 +162,7 @@ def create_events(world: Quest64World) -> None:
     # We will use this event to track whether the player can win the game.
     # The Victory event is a completely optional abstraction - This will be discussed more in set_rules().
     final_boss_room.add_event(
-        "Final Boss Defeated", "Victory", location_type=APQuestLocation, item_type=items.APQuestItem
+        "Final Boss Defeated", "Victory", location_type=Quest64Location, item_type=items.APQuestItem
     )
 
     # If you create all your regions and locations line-by-line like this,

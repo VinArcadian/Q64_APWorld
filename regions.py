@@ -33,47 +33,51 @@ def create_all_regions(world: Quest64World) -> None:
     # Let's put all these regions in a list.
     regions = [earth_region, wind_region, water_region, fire_region, book_region]
 
-    # Some regions may only exist if the player enables certain options.
-    # In our case, the Hammer locks the top middle chest in its own room if the hammer option is enabled.
-    if world.options.hammer:
-        top_middle_room = Region("Top Middle Room", world.player, world.multiworld)
-        regions.append(top_middle_room)
+    ## Some regions may only exist if the player enables certain options.
+    ## In our case, the Hammer locks the top middle chest in its own room if the hammer option is enabled.
+    # if world.options.hammer:
+    #    top_middle_room = Region("Top Middle Room", world.player, world.multiworld)
+    #    regions.append(top_middle_room)
 
     # We now need to add these regions to multiworld.regions so that AP knows about their existence.
     world.multiworld.regions += regions
 
 
-def connect_regions(world: APQuestWorld) -> None:
+def connect_regions(world: Quest64World) -> None:
     # We have regions now, but still need to connect them to each other.
     # But wait, we no longer have access to the region variables we created in create_all_regions()!
     # Luckily, once you've submitted your regions to multiworld.regions,
     # you can get them at any time using world.get_region(...).
-    overworld = world.get_region("Overworld")
-    top_left_room = world.get_region("Top Left Room")
-    bottom_right_room = world.get_region("Bottom Right Room")
-    right_room = world.get_region("Right Room")
-    final_boss_room = world.get_region("Final Boss Room")
+    earth_region = world.get_region("Earth Region")
+    wind_region = world.get_region("Wind Region")
+    water_region = world.get_region("Water Region")
+    fire_region = world.get_region("Fire Region")
+    book_region = world.get_region("Book Region")
 
-    # Okay, now we can get connecting. For this, we need to create Entrances.
-    # Entrances are inherently one-way, but crucially, AP assumes you can always return to the origin region.
-    # One way to create an Entrance is by calling the Entrance constructor.
-    overworld_to_bottom_right_room = Entrance(world.player, "Overworld to Bottom Right Room", parent=overworld)
-    overworld.exits.append(overworld_to_bottom_right_room)
+    ## Okay, now we can get connecting. For this, we need to create Entrances.
+    ## Entrances are inherently one-way, but crucially, AP assumes you can always return to the origin region.
+    ## One way to create an Entrance is by calling the Entrance constructor.
+    # earth_region_to_wind_region = Entrance(world.player, "Earth Region to Wind Region", parent=earth_region)
+    # earth_region.exits.append(earth_region_to_wind_region)
 
-    # You can then connect the Entrance to the target region.
-    overworld_to_bottom_right_room.connect(bottom_right_room)
+    ## You can then connect the Entrance to the target region.
+    # earth_region_to_wind_region.connect(wind_region)
 
     # An even easier way is to use the region.connect helper.
-    overworld.connect(right_room, "Overworld to Right Room")
-    right_room.connect(final_boss_room, "Right Room to Final Boss Room")
+    wind_region.connect(water_region, "Wind Region to Water Region")
+    water_region.connect(fire_region, "Water Region to Fire Region")
 
     # The region.connect helper even allows adding a rule immediately.
     # We'll talk more about rule creation in the set_all_rules() function in rules.py.
-    overworld.connect(top_left_room, "Overworld to Top Left Room", lambda state: state.has("Key", world.player))
+    earth_region.connect(wind_region, "Earth Region to Wind Region", lambda state: state.has("Earth Orb", world.player))
+    wind_region.connect(water_region, "Wind Region to Water Region", lambda state: state.has("Wind Jade", world.player))
+    water_region.connect(fire_region, "Water Region to Fire Region", lambda state: state.has("Water Jewel", world.player))
+    fire_region.connect(book_region, "Fire Region to Book Region", lambda state: state.has("Fire Ruby", world.player))
+    
 
-    # Some Entrances may only exist if the player enables certain options.
-    # In our case, the Hammer locks the top middle chest in its own room if the hammer option is enabled.
-    # In this case, we previously created an extra "Top Middle Room" region that we now need to connect to Overworld.
-    if world.options.hammer:
-        top_middle_room = world.get_region("Top Middle Room")
-        overworld.connect(top_middle_room, "Overworld to Top Middle Room")
+    ## Some Entrances may only exist if the player enables certain options.
+    ## In our case, the Hammer locks the top middle chest in its own room if the hammer option is enabled.
+    ## In this case, we previously created an extra "Top Middle Room" region that we now need to connect to Overworld.
+    # if world.options.hammer:
+    #    top_middle_room = world.get_region("Top Middle Room")
+    #    overworld.connect(top_middle_room, "Overworld to Top Middle Room")
