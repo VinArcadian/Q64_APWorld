@@ -29,9 +29,10 @@ def create_all_regions(world: Quest64World) -> None:
     water_region = Region("Water Region", world.player, world.multiworld)
     fire_region = Region("Fire Region", world.player, world.multiworld)
     book_region = Region("Book Region", world.player, world.multiworld)
+    mammon_region = Region("Mammon Region", world.player, world.multiworld)
 
     # Let's put all these regions in a list.
-    regions = [earth_region, wind_region, water_region, fire_region, book_region]
+    regions = [earth_region, wind_region, water_region, fire_region, book_region, mammon_region]
 
     ## Some regions may only exist if the player enables certain options.
     ## In our case, the Hammer locks the top middle chest in its own room if the hammer option is enabled.
@@ -53,6 +54,7 @@ def connect_regions(world: Quest64World) -> None:
     water_region = world.get_region("Water Region")
     fire_region = world.get_region("Fire Region")
     book_region = world.get_region("Book Region")
+    mammon_region = world.get_region("Mammon Region")
 
     ## Okay, now we can get connecting. For this, we need to create Entrances.
     ## Entrances are inherently one-way, but crucially, AP assumes you can always return to the origin region.
@@ -63,9 +65,9 @@ def connect_regions(world: Quest64World) -> None:
     ## You can then connect the Entrance to the target region.
     # earth_region_to_wind_region.connect(wind_region)
 
-    # An even easier way is to use the region.connect helper.
-    wind_region.connect(water_region, "Wind Region to Water Region")
-    water_region.connect(fire_region, "Water Region to Fire Region")
+    ## An even easier way is to use the region.connect helper.
+    # wind_region.connect(water_region, "Wind Region to Water Region")
+    # water_region.connect(fire_region, "Water Region to Fire Region")
 
     # The region.connect helper even allows adding a rule immediately.
     # We'll talk more about rule creation in the set_all_rules() function in rules.py.
@@ -73,6 +75,7 @@ def connect_regions(world: Quest64World) -> None:
     wind_region.connect(water_region, "Wind Region to Water Region", lambda state: state.has("Wind Jade", world.player))
     water_region.connect(fire_region, "Water Region to Fire Region", lambda state: state.has("Water Jewel", world.player))
     fire_region.connect(book_region, "Fire Region to Book Region", lambda state: state.has("Fire Ruby", world.player))
+    book_region.connect(mammon_region, "Book Region to Mammon Region", lambda state: state.has("Eletale Book", world.player))
     
 
     ## Some Entrances may only exist if the player enables certain options.
