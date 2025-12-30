@@ -96,20 +96,20 @@ class Quest64Item(Item):
     #    return "Math Trap"
     # return "Confetti Cannon"
 
-
-# def create_item_with_correct_classification(world: Quest64World, name: str) -> Quest64Item:
+    
+def create_item_with_correct_classification(world: Quest64World, name: str) -> Quest64Item:
     ## Our world class must have a create_item() function that can create any of our items by name at any time.
     ## So, we make this helper function that creates the item by name with the correct classification.
     ## Note: This function's content could just be the contents of world.create_item in world.py directly,
     ## but it seemed nicer to have it in its own function over here in items.py.
-    # classification = DEFAULT_ITEM_CLASSIFICATIONS[name]
+    classification = DEFAULT_ITEM_CLASSIFICATIONS[name]
 
     ## It is perfectly normal and valid for an item's classification to differ based on the player's options.
     ## In our case, Health Upgrades are only relevant to logic (and thus labeled as "progression") in hard mode.
     # if name == "Health Upgrade" and world.options.hard_mode:
     #    classification = ItemClassification.progression
 
-    # return APQuestItem(name, classification, ITEM_NAME_TO_ID[name], world.player)
+    return Quest64Item(name, classification, ITEM_NAME_TO_ID[name], world.player)
 
 
 # With those two helper functions defined, let's now get to actually creating and submitting our itempool.
