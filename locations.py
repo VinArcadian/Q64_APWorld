@@ -97,7 +97,25 @@ def create_regular_locations(world: Quest64World) -> None:
     # Aha! So that's why we made that "get_location_names_with_ids" helper method earlier.
     # You also need to pass your overridden Location class.
     earth_region_locations = get_location_names_with_ids(
-        ["Melrode - Monastery Garden Chest", "Melrode - Monastery Cellar Chest 1", "Melrode - Monastery Cellar Chest 2", "Melrode Monastery - Refectory Chest", "Melrode Monastery - Refectory Gift (Pat)", "Melrode - Shepard's Hut Chest", "Dondoran - Tavern Gift (Mable)", "Dondoran - Tavern Gift (Maggie)", "Dondoran Castle - Scottford's Bedroom Chest 1", "Dondoran Castle - Scottford's Bedroom Chest 2", "Dondoran Castle - Scottford's Bedroom Chest 3", "Dondoran Castle - Flora's Bedroom Chest 1", "Dondoran Castle - Flora's Bedroom Chest 2", "Dondoran Castle - Flora's Bedroom Chest 3", "Connor Forest - Hut Interior Chest", "Connor Forest - Loch Gate Chest", "Connor Forest - Fort Left Platform Chest", "Connor Forest - Fort Right Platform Chest", "Connor Forest - Boss Reward (Solvaring)"]
+        ["Melrode - Monastery Garden Chest", 
+        "Melrode - Monastery Cellar Chest 1",
+        "Melrode - Monastery Cellar Chest 2",
+        "Melrode Monastery - Refectory Chest",
+        "Melrode Monastery - Refectory Gift (Pat)",
+        "Melrode - Shepard's Hut Chest",
+        "Dondoran - Tavern Gift (Mable)",
+        "Dondoran - Tavern Gift (Maggie)",
+        "Dondoran Castle - Scottford's Bedroom Chest 1", 
+        "Dondoran Castle - Scottford's Bedroom Chest 2",
+        "Dondoran Castle - Scottford's Bedroom Chest 3",
+        "Dondoran Castle - Flora's Bedroom Chest 1",
+        "Dondoran Castle - Flora's Bedroom Chest 2",
+        "Dondoran Castle - Flora's Bedroom Chest 3",
+        "Connor Forest - Hut Interior Chest",
+        "Connor Forest - Loch Gate Chest",
+        "Connor Forest - Fort Left Platform Chest",
+        "Connor Forest - Fort Right Platform Chest",
+        "Connor Forest - Boss Reward (Solvaring)"]
     )
     earth_region.add_locations(earth_region_locations, Quest64Location)
 
