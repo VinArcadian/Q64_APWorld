@@ -67,20 +67,35 @@ DEFAULT_ITEM_CLASSIFICATIONS = {
     "Water Jewel": ItemClassification.progression,
     "Fire Ruby": ItemClassification.progression,
     "Eletale Book": ItemClassification.progression,
-    "Dark Gaol Key": ItemClassification.progression,
+    "Dark Gaol Key": ItemClassification.progression
 }
 
+FILLER_ITEMS = {
+    "Spirit Light",
+    "Fresh Bread",
+    "Honey Bread",
+    "Healing Potion",
+    "Dragon Potion",
+    "Dew Drop",
+    "Mint Leaves",
+    "Heroes Drink",
+    "Silent Flute",
+    "Celine's Bell",
+    "Replica",
+    "Giant's Shoes",
+    "Silver Amulet",
+    "Golden Amulet"
+}
 
 # Each Item instance must correctly report the "game" it belongs to.
 # To make this simple, it is common practice to subclass the basic Item class and override the "game" field.
 class Quest64Item(Item):
     game = "Quest 64"
 
-
 ## Ontop of our regular itempool, our world must be able to create arbitrary amounts of filler as requested by core.
 ## To do this, it must define a function called world.get_filler_item_name(), which we will define in world.py later.
 ## For now, let's make a function that returns the name of a random filler item here in items.py.
-# def get_random_filler_item_name(world: Quest64World) -> str:
+def get_random_filler_item_name(world: Quest64World) -> str:
     ## APQuest has an option called "trap_chance".
     ## This is the percentage chance that each filler item is a Math Trap instead of a Confetti Cannon.
     ## For this purpose, we need to use a random generator.
@@ -88,10 +103,7 @@ class Quest64Item(Item):
     ## IMPORTANT: Whenever you need to use a random generator, you must use world.random.
     ## This ensures that generating with the same generator seed twice yields the same output.
     ## DO NOT use a bare random object from Python's built-in random module.
-    # if world.random.randint(0, 99) < world.options.trap_chance:
-    #    return "Math Trap"
-    # return "Confetti Cannon"
-
+    return world.random.choice(FILLER_ITEMS)
     
 def create_item_with_correct_classification(world: Quest64World, name: str) -> Quest64Item:
     ## Our world class must have a create_item() function that can create any of our items by name at any time.
